@@ -36,7 +36,7 @@ RSpec.configure do |config|
   # Clean up the database
   require 'database_cleaner'
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner[:mongoid].strategy = :truncation
     DatabaseCleaner.orm = "mongoid"
   end
 

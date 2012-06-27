@@ -48,3 +48,8 @@ gem "bson_ext", ">= 1.6.4"
 gem "mongoid", ">= 2.4.11"
 gem "devise", ">= 2.1.0"
 gem "simple_form"
+gem "activeadmin-mongoid"
+
+
+
+
