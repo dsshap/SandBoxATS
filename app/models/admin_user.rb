@@ -1,5 +1,6 @@
 class AdminUser
   include Mongoid::Document
+	include Mongoid::Timestamps
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -10,8 +11,8 @@ class AdminUser
   field :email,              :type => String, :default => ""
   field :encrypted_password, :type => String, :default => ""
 
-  validates_presence_of :email
-  validates_presence_of :encrypted_password
+  #validates_presence_of :email
+  #validates_presence_of :encrypted_password
   
   ## Recoverable
   field :reset_password_token,   :type => String
@@ -27,7 +28,7 @@ class AdminUser
   field :current_sign_in_ip, :type => String
   field :last_sign_in_ip,    :type => String
 
-  field :overlord,           :type => Boolean
+  field :overlord,           :type => Boolean, :default => false
 
   ## Confirmable
   # field :confirmation_token,   :type => String
@@ -43,9 +44,16 @@ class AdminUser
   ## Token authenticatable
   # field :authentication_token, :type => String
   
-  has_one :company
+  has_and_belongs_to_many :companies
+
+	after_create { |admin| admin.send_reset_password_instructions }
+
+  def password_required?
+    new_record? ? false : super
+  end
   
-  accepts_nested_attributes_for :company, :allow_destroy => true
-  attr_accessible :company_attributes
+  #accepts_nested_attributes_for :companys, :allow_destroy => true
+  #attr_accessible :company_attributes, :overlord
+	attr_accessible :email, :overlord
   
 end

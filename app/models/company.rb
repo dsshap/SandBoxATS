@@ -1,20 +1,37 @@
 class Company
   include Mongoid::Document
-  include Mongoid::Timestamp
+  include Mongoid::Timestamps
   
   field :name,              :type => String
   field :city,              :type => String
   field :state,             :type => String
-  field :url,               :type => String
-  field :access_token,      :type => String
+  field :url,               :type => String, :null => false, :default => "http://"
+	field :access_token,			:type => String
   
-  belongs_to :admin_user
-  
-  validates_presence_of :name, :access_token, :city, :url, :state
-  
-  protected
-  def before_validation_on_create
-    self.access_token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").gsub(/=+$/,"")
+  has_and_belongs_to_many :admin_users
+	has_and_belongs_to_many :job_listings
+  attr_accessible :name, :city, :url, :state, :admin_users_attributes, :job_listings_attributes
+	accepts_nested_attributes_for :admin_users, :job_listings, :allow_destroy => true
+  validates_presence_of :name, :city, :url, :state
+  before_create :create_token
+	
+  def create_token
+    #self.access_token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").gsub(/=+$/,"")
+		o =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten;  
+		self.access_token  =  (0..50).map{ o[rand(o.length)]  }.join;
   end
+
+	def admin_users_attributes=(str)
+		str.each do |key, value|
+			admin = AdminUser.where(email: str[key]['email']).first
+      self.admin_users.push(admin) 
+   		self.save
+
+			if str[key]["_destroy"] == "1"
+        self.admin_users.delete(admin)
+				admin.companies.delete(self)
+      end
+    end
+	end
   
 end

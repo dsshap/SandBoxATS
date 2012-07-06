@@ -50,6 +50,7 @@ gem "devise", ">= 2.1.0"
 gem "simple_form"
 gem "activeadmin-mongoid"
 
+gem 'quiet_assets', :group => :development
 
 
 
