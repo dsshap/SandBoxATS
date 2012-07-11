@@ -8,7 +8,7 @@ ActiveAdmin.register AdminUser do
 		default_actions
 	end
 	
-	show do
+	show :title => :email do
   	panel "Admin User Details" do
     	attributes_table_for admin_user do
 				row :id

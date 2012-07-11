@@ -16,9 +16,8 @@ class Company
   before_create :create_token
 	
   def create_token
-    #self.access_token = ActiveSupport::SecureRandom.base64(8).gsub("/","_").gsub(/=+$/,"")
 		o =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten;  
-		self.access_token  =  (0..50).map{ o[rand(o.length)]  }.join;
+		self.access_token  =  (0..30).map{ o[rand(o.length)]  }.join;
   end
 
 	def admin_users_attributes=(str)
@@ -33,5 +32,11 @@ class Company
       end
     end
 	end
+	
+	def as_json(options={})
+		 super(options.merge(:include => {:job_listings => { :only => [:_id, :title, :description, :email, :city, :state]}}, :except => [:_id, :created_at, :updated_at, :job_listing_ids, :admin_user_ids])) 
+	end
+	
+
   
 end

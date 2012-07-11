@@ -29,5 +29,10 @@ class JobListing
       end
     end
 	end
+	
+	def as_json(options={})
+		logger.debug("IN JOB LISTINGS")
+		 super(options.merge(:only => [:id, :title, :description, :email, :city, :state])) 
+	end
 
 end
