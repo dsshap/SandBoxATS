@@ -19,7 +19,7 @@ ActiveAdmin.register AdminUser do
 				row :overlord
 				row("Companies"){
 					array = Array.new
-					admin_user.companys.each do |company|
+					admin_user.companies.each do |company|
 						array.push(company.name)
 					end
 					array.to_s
