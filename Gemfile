@@ -50,6 +50,10 @@ gem "devise", ">= 2.1.0"
 gem "simple_form"
 gem "activeadmin-mongoid"
 
+gem "httparty", "~> 0.8.3"
+
+gem "bootstrap-sass", "~> 2.0.4.0"
+
 gem 'quiet_assets', :group => :development
 
 

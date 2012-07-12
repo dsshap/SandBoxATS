@@ -5,7 +5,17 @@ SandBoxATS::Application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 
-	match 'company/:name' => 'company#listings', :via => 'get'
+	namespace 'api' do
+		namespace 'v1' do
+			match 'company/:name' => 'company#listings', :via => 'get'
+			match 'company/:name/:job_id' => 'company#listing', :via => 'get'
+		end
+	end
+	
+	match '/' => 'application#show', :via => 'get'
+	match '/:name/:job_id' => 'application#job', :via => 'get'
+	
+	
 
 	# namespace :company do
 	# 	get ':namelistings'

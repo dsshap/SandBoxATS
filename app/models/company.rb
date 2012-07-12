@@ -33,10 +33,9 @@ class Company
     end
 	end
 	
-	def as_json(options={})
-		 super(options.merge(:include => {:job_listings => { :only => [:_id, :title, :description, :email, :city, :state]}}, :except => [:_id, :created_at, :updated_at, :job_listing_ids, :admin_user_ids])) 
+	def as_json(options={})		
+		jobs = self.job_listings.where(status: 'Active')
+		company = ApiCompany.new(self.name, self.city, self.state, self.url, jobs)
 	end
 	
-
-  
 end

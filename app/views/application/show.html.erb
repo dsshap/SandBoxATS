@@ -1,0 +1,24 @@
+<div class="row">
+  <% @result['ats']['companies'].each do |company| %>
+    <h2><%= company['name'] %></h2>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>  
+      <% company["job_listings"].each do |job| %>
+        <tr>
+          <td><%= link_to(job['title'], 'http://localhost:3100/'+ company["name"]+ '/'+ job["id"] )%></td>
+          <td><%= job['city'] %>, <%= job['state'] %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
+
+<hr>
+<p>API return: <code><%= @result.to_json %></code></p>
