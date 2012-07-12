@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 	include HTTParty
-  base_uri 'localhost:3200'
+  base_uri ENV['api_uri']
 	default_params :token => ''
 
 	def show

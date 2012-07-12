@@ -31,7 +31,7 @@ SandBoxATS::Application.configure do
     password: ENV["GMAIL_PASSWORD"]
   }
 
-
+	ENV['api_uri'] = 'localhost:3200'
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
