@@ -1,6 +1,5 @@
-SandboxATS
-
-Desc: 
+SandBoxATS
+ 
 This is an ats system that allows companies to create job postings under an umbrella company. The system
 includes an api for each company to pull all their job listings. As well as an api for the parent company to 
 pull all job postings for their children companies.
