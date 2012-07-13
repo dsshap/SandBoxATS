@@ -5,13 +5,14 @@ class ApplicationController < ActionController::Base
 	default_params :token => ''
 
 	def show
-		get = self.class.get('/api/v1/company/all', options={})
+		auth = {:username => "sandbox", :password => "sandbox"}
+		get = self.class.get('/api/v1/company/all', :basic_auth => auth)
 		@result = JSON.parse(get.body)
 	end
 	
 	def job
-		get = self.class.get('/api/v1/company/'+params[:name]+'/'+params[:job_id])
-		logger.debug(get)
+		auth = {:username => "sandbox", :password => "sandbox"}
+		get = self.class.get('/api/v1/company/'+params[:name]+'/'+params[:job_id], :basic_auth => auth)
 		@result = JSON.parse(get.body)
 	end
 	
