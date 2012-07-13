@@ -53,6 +53,7 @@ gem "activeadmin-mongoid"
 gem "httparty", "~> 0.8.3"
 
 gem "bootstrap-sass", "~> 2.0.4.0"
+gem "tinymce-rails", "~> 3.5.4.1"
 
 gem 'quiet_assets', :group => :development
 

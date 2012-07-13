@@ -4,6 +4,8 @@ ActiveAdmin.register JobListing do
 		column :title do |job|
 			link_to job.title, admin_job_listing_path(job)
 		end
+		column :category
+		column :job_type
 		column :status do |job|
 			if job.status == "Active"
 		  	status_tag("Actively Searching", :ok)
@@ -32,7 +34,11 @@ ActiveAdmin.register JobListing do
   	panel "Job Listing Details" do
     	attributes_table_for job_listing do
 				row :title
-				row :description
+				row :category
+				row :job_type
+				row('Description'){
+					job_listing.description.html_safe
+				} 
 				row	:email
 				row :city
 				row :state
@@ -62,7 +68,9 @@ ActiveAdmin.register JobListing do
 	form do |f|
 		f.inputs do
   		f.input :title
-			f.input :description, :as => :text, :input_html => { :class => 'autogrow', :rows => 10}
+			f.input :category, :as => :select, :collection => Category.collection.distinct('name')
+			f.input :job_type, :as => :select, :collection => ["Full-Time", "Part-Time", "Contractor", "Intern"]
+			f.input :description, :as => :text, :input_html => { :class => 'autogrow', :rows => 40}
 			f.input :email
 			f.input :city
 			f.input :state

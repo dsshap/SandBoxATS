@@ -1,15 +1,18 @@
 <div class="row">
   <h1><%= @result['ats']['job_listing']['title'] %></h1>
-  <h4><%=  @result['ats']['job_listing']['city']%>, <%= @result['ats']['job_listing']['state'] %></h4>
+  <h3><%= @result['ats']['job_listing']['job_type'] %></h3>
+  <h3><%= @result['ats']['job_listing']['category'] %></h3  >
+  <h5><%=  @result['ats']['job_listing']['city']%>, <%= @result['ats']['job_listing']['state'] %></h5>
   <br />
-  <h3><%= @result['ats']['job_listing']['company'] %></h3>
-  <h6>(<%= @result['ats']['job_listing']['company_city'] %>, <%= @result['ats']['job_listing']['company_state'] %>)</h6>
+  <h3><%= @result['ats']['company']['name'] %></h3>
+  <h5><%= @result['ats']['company']['department'] %></h5>
+  <h6>(<%= @result['ats']['company']['city'] %>, <%= @result['ats']['company']['state'] %>)</h6>
   <br />
-  <p><%=  @result['ats']['job_listing']['description']%></p>
+  <p><%=  @result['ats']['job_listing']['description'].html_safe%></p>
   <br/>
-  <p>If interested, please email: <%= mail_to @result['ats']['job_listing']['email'], nil, :replace_at => " at ", :replace_dot => " dot ", :subject => 'Interest in '+@result['ats']['job_listing']['title'] + ' position at '+ @result['ats']['job_listing']['company']%>
+  <p>If interested, please email: <%= mail_to @result['ats']['job_listing']['email'], nil, :replace_at => " at ", :replace_dot => " dot ", :subject => 'Interest in the '+@result['ats']['job_listing']['title'] + ' position at '+ @result['ats']['company']['name']%>
   
-  <p>Posted on: <%= @result['ats']['job_listing']['posted_date'].to_date %>
+  <p>Posted on: <%= @result['ats']['job_listing']['created_at'].to_date %>
 </div>
 
 <hr>

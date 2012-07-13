@@ -6,19 +6,16 @@ class Company
   field :city,              :type => String
   field :state,             :type => String
   field :url,               :type => String, :null => false, :default => "http://"
-	field :access_token,			:type => String
+	field :department,				:type => String
+
   
   has_and_belongs_to_many :admin_users
 	has_and_belongs_to_many :job_listings
-  attr_accessible :name, :city, :url, :state, :admin_users_attributes, :job_listings_attributes
+  attr_accessible :name, :city, :url, :state, :admin_users_attributes, :job_listings_attributes, :department
 	accepts_nested_attributes_for :admin_users, :job_listings, :allow_destroy => true
   validates_presence_of :name, :city, :url, :state
-  before_create :create_token
+	validates_uniqueness_of :name
 	
-  def create_token
-		o =  [('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten;  
-		self.access_token  =  (0..30).map{ o[rand(o.length)]  }.join;
-  end
 
 	def admin_users_attributes=(str)
 		str.each do |key, value|
@@ -34,8 +31,23 @@ class Company
 	end
 	
 	def as_json(options={})		
+		logger.debug("Options")
+		logger.debug(options.to_json)
+		
 		jobs = self.job_listings.where(status: 'Active')
-		company = ApiCompany.new(self.name, self.city, self.state, self.url, jobs)
+		hash = {
+			name: self.name,
+			department: self.department,
+			city: self.city,
+			state: self.state,
+			url: self.url
+		}
+		
+		if(options[:template] == 'listings')
+			hash[:job_listings] = jobs
+		end
+		
+		hash
 	end
 	
 end

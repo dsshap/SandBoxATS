@@ -11,7 +11,7 @@
       <tbody>  
       <% company["job_listings"].each do |job| %>
         <tr>
-          <td><%= link_to(job['title'], '/'+ company["name"]+ '/'+ job["id"] )%></td>
+          <td><%= link_to(job['title'], '/'+ company["name"]+ '/'+ job["_id"] )%></td>
           <td><%= job['city'] %>, <%= job['state'] %></td>
         </tr>
       <% end %>

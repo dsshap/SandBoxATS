@@ -12,6 +12,7 @@ ActiveAdmin.register Company do
 		column "Job Listings" do |comp|
 			comp.job_listings.count
 		end
+		column :department
 		column :city
 		column :state
 		column :url
@@ -24,6 +25,7 @@ ActiveAdmin.register Company do
     	attributes_table_for company do
 				row :id
 				row :name
+				row :department
 				row :city
 				row :state
 				row :url
@@ -68,6 +70,7 @@ ActiveAdmin.register Company do
 	form do |f|
 		f.inputs do
   		f.input :name
+			f.input :department, :as => :select, :collection => Department.collection.distinct('name')
 			f.input :city
 			f.input :state
 			f.input :url
