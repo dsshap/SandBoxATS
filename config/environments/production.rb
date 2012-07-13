@@ -2,7 +2,7 @@ SandBoxATS::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
 	config.middleware.insert_after(::Rack::Lock, "::Rack::Auth::Basic", "Staging") do |u, p|
-    [u, p] == ['sandbox', 'sandbox213']
+    [u, p] == ['sandbox', 'sandbox']
   end
 
   # Code is not reloaded between requests
