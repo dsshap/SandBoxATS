@@ -16,7 +16,6 @@ ActiveAdmin.register Company do
 		column :city
 		column :state
 		column :url
-		column :access_token
 		default_actions
 	end
 	
@@ -29,7 +28,6 @@ ActiveAdmin.register Company do
 				row :city
 				row :state
 				row :url
-				row :access_token
 				row("Admins"){
 					array = Array.new
 					company.admin_users.each do |admin|
